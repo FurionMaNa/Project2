@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script type="text/javascript">
+			var Matrix=new Array();
+			var OldI=-1;
+			var OldJ=-1;
+			function Create(){
+				for(i=0;i<10;i++){
+					Matrix[i]=new Array();
+					document.getElementById("MainTable").innerHTML+="<tr id='"+i+"' class='Row'>";
+					for(j=0;j<10;j++){
+						document.getElementById(i).innerHTML+="<td align='center' onClick='ClickTr("+i+","+j+")' id='"+i+""+j+"' class='Cell'>";
+						Matrix[i][j]=Math.floor(Math.random()*(5-1)+1);
+						document.getElementById(i).innerHTML+="</td>";
+					}
+					document.getElementById("MainTable").innerHTML+="</tr>";
+				}
+				Transform();
+				Paint();
+			}
+
+			function ClickTr(i,j){
+				//alert(i);
+				//alert(j);
+				var Buff;
+				if(OldI==-1){
+					OldI=i;
+					OldJ=j;
+				}else{
+					if(((i+1==OldI)&&(j==OldJ))||((i-1==OldI)&&(j==OldJ))||((i==OldI)&&(j+1==OldJ))||((i==OldI)&&(j-1==OldJ))){
+						Buff=Matrix[i][j];
+						Matrix[i][j]=Matrix[OldI][OldJ];
+						Matrix[OldI][OldJ]=Buff;
+						OldI=-1;
+						OldJ=-1;
+						Transform();
+					}
+				}
+				Paint();
+			}
+
+			function OffSet(ii,jj,f){
+				for(i=ii;i>0;i--){
+					Matrix[i][jj]=Matrix[i-1][jj];
+					Matrix[i][jj+1]=Matrix[i-1][jj+1];
+					Matrix[i][jj+2]=Matrix[i-1][jj+2];
+				}
+				//alert("Offset");
+				Matrix[0][jj]=Math.floor(Math.random()*(5-1)+1);
+				Matrix[0][jj+1]=Math.floor(Math.random()*(5-1)+1);
+				Matrix[0][jj+2]=Math.floor(Math.random()*(5-1)+1);
+				Paint();
+			}
+
+			function Transform(){
+				var f=true;
+				while(f){
+					f=false
+					for (i=0;i<10;i++){
+						for (j=0;j<10;j++){
+							if(j<7){
+								if((Matrix[i][j]==Matrix[i][j+1])&&(Matrix[i][j+1]==Matrix[i][j+2])){
+									f=true;
+									Matrix[i][j]=-1;
+									Matrix[i][j+1]=-1;
+									Matrix[i][j+2]=-1;
+									OffSet(i,j,true);
+								}else{
+									f=false;
+								}
+							}
+						}		
+					}
+					for (i=0;i<10;i++){
+						for (j=0;j<10;j++){
+							if(j<7){
+								if((Matrix[j][i]==Matrix[j+1][i])&&(Matrix[j+1][i]==Matrix[j+2][i])){
+									f=true;
+									Matrix[j][i]=-1;
+									Matrix[j+1][i]=-1;
+									Matrix[j][i]=-1;
+									OffSet(j,i,true);
+								}else{
+									f=false;
+								}
+							}
+						}		
+					}
+				}
+			}
+
+			function Paint(){
+				var Cell;
+				for(i=0;i<10;i++){
+					for(j=0;j<10;j++){
+						Cell=document.getElementById(String(i)+String(j));
+						switch(Matrix[i][j]){
+							case(1):
+								Cell.innerHTML="<img class='Objects' src='img/ball_1.png'>";
+								break;
+							case(2):
+								Cell.innerHTML="<img class='Objects' src='img/ball_2.png'>";
+								break;
+							case(3):
+								Cell.innerHTML="<img class='Objects' src='img/ball_3.png'>";
+								break;
+							case(4):
+								Cell.innerHTML="<img class='Objects' src='img/ball_4.png'>";
+								break;
+							case(5):
+								Cell.innerHTML="<img class='Objects' src='img/ball_5.png'>";
+								break;
+						}
+					}
+				}
+			}
+		</script>
+		<link rel="stylesheet" type="text/css" href="main.css">
+	</head>
+	<body onload="Create()">
+		<TABLE id="MainTable" class="MainTable">
+			
+		</TABLE> 
+	</body>
+</html>

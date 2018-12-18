@@ -1,0 +1,29 @@
+body{
+	background-image: url('img/imgBG.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.MainTable{
+	width: 700px;
+	height: 500px;
+	margin: auto;
+	background-color: #0000FF;
+	border-color: #000;
+	box-shadow: 0 0 300px rgba(0,0,1,5); 
+}
+
+.Row{
+	height: 50px;
+}
+
+.Objects{
+	height:50px;
+	margin-left: 5%;
+	margin-top: 15%;
+}
+
+.Cell{
+	background-image: url('img/Cell.png');
+}
